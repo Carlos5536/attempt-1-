@@ -8,7 +8,7 @@
     body {
       font-family: 'Segoe UI', Arial, sans-serif;
       text-align: center;
-      background: linear-gradient(135deg, #4facfe, #00f2fe);
+      background: linear-gradient(135deg, #42e695, #3bb2b8);
       padding: 20px;
       color: #222;
       margin: 0;
@@ -17,7 +17,7 @@
       background: #fff;
       border-radius: 16px;
       padding: 20px;
-      max-width: 500px;
+      max-width: 600px;
       margin: 40px auto;
       box-shadow: 0 4px 15px rgba(0,0,0,0.2);
     }
@@ -61,55 +61,33 @@
   </div>
 
   <script>
-    const jokes = [
-      "I'm afraid for the calendar. Its days are numbered.",
-      "Why do fathers take an extra pair of socks when they go golfing? In case they get a hole in one!",
-      "Singing in the shower is fun until you get soap in your mouth. Then it's a soap opera.",
-      "Why did the math book look sad? Because it had too many problems.",
-      "I only know 25 letters of the alphabet. I don't know y.",
-      "What does a sprinter eat before a race? Nothing, they fast!",
-      "Why couldn't the bicycle stand up by itself? It was two-tired.",
-      "I used to hate facial hair, but then it grew on me.",
-      "What do you call cheese that isn't yours? Nacho cheese!",
-      "What kind of shoes do ninjas wear? Sneakers!",
-      "Why don't skeletons fight each other? They don't have the guts.",
-      "What did one wall say to the other? I'll meet you at the corner."
-    ];
+    let jokes = [];
 
-    const verses = [
-      { 
-        text: "Philippians 4:13 – I can do all things through Christ who strengthens me.",
-        meaning: "This verse reminds you that God empowers you to overcome any challenge, big or small."
-      },
-      { 
-        text: "John 3:16 – For God so loved the world that He gave His only Son...",
-        meaning: "This highlights God's unconditional love and the gift of eternal life through Jesus."
-      },
-      { 
-        text: "Proverbs 3:5 – Trust in the Lord with all your heart and lean not on your own understanding.",
-        meaning: "Encourages faith in God's plan even when life doesn't make sense."
-      },
-      { 
-        text: "Psalm 23:1 – The Lord is my shepherd; I shall not want.",
-        meaning: "Assures you that God provides and guides you, meeting all your needs."
-      },
-      { 
-        text: "Isaiah 41:10 – Fear not, for I am with you; be not dismayed, for I am your God.",
-        meaning: "A reminder that you are never alone—God's presence gives you courage and strength."
-      }
-    ];
-
-    function generateContent() {
-      // Random joke
-      document.getElementById("joke").innerText = jokes[Math.floor(Math.random() * jokes.length)];
-      
-      // Random verse with description
-      let randomVerse = verses[Math.floor(Math.random() * verses.length)];
-      document.getElementById("verse").innerText = randomVerse.text;
-      document.getElementById("meaning").innerText = randomVerse.meaning;
+    async function loadJokes() {
+      const response = await fetch('jokes.json');
+      jokes = await response.json();
     }
 
-    // Load content on page open
+    async function generateContent() {
+      if (jokes.length === 0) await loadJokes();
+
+      // Random Joke
+      document.getElementById("joke").innerText = jokes[Math.floor(Math.random() * jokes.length)];
+
+      try {
+        // Random Bible Verse from API
+        const verseRes = await fetch("https://labs.bible.org/api/?passage=random&type=json");
+        const verseData = await verseRes.json();
+        const verse = verseData[0];
+        document.getElementById("verse").innerText = verse.bookname + " " + verse.chapter + ":" + verse.verse + " – " + verse.text;
+        document.getElementById("meaning").innerText = "Reflect on how this verse applies to your day.";
+      } catch (err) {
+        document.getElementById("verse").innerText = "Could not load Bible verse.";
+        document.getElementById("meaning").innerText = "Check your connection.";
+      }
+    }
+
+    // Load initial content
     generateContent();
   </script>
 </body>
