@@ -154,7 +154,6 @@
         const data = await res.json();
         return `${data[0].bookname} ${data[0].chapter}:${data[0].verse} – ${data[0].text}`;
       } catch (e) {
-        return "John 3:16 – For God so loved the world that He gave His only Son...";
       }
     }
 
