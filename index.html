@@ -3,61 +3,86 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Daily Joke & Verse</title>
+  <title>JAJ Daily</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
+      font-family: 'Segoe UI', Arial, sans-serif;
       text-align: center;
-      background: #f7f7f7;
+      background: linear-gradient(135deg, #4facfe, #00f2fe);
       padding: 20px;
+      color: #222;
+      margin: 0;
     }
     .card {
-      background: white;
-      border-radius: 12px;
+      background: #fff;
+      border-radius: 16px;
       padding: 20px;
-      max-width: 400px;
-      margin: auto;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      max-width: 450px;
+      margin: 40px auto;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
     }
     h1 {
-      color: #333;
+      color: #0077cc;
+      margin-bottom: 15px;
     }
     .joke, .verse {
       margin: 20px 0;
       font-size: 1.2em;
+      font-weight: bold;
     }
     .meaning {
-      color: #666;
-      font-size: 0.9em;
+      color: #555;
+      font-size: 1em;
+      margin-top: 10px;
+    }
+    button {
+      margin-top: 20px;
+      padding: 10px 25px;
+      font-size: 1em;
+      background: #0077cc;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    button:hover {
+      background: #005fa3;
     }
   </style>
 </head>
 <body>
   <div class="card">
-    <h1>😂 Your Daily Joke & ✝️ Verse</h1>
-    <div class="joke" id="joke"></div>
-    <div class="verse" id="verse"></div>
-    <div class="meaning" id="meaning"></div>
+    <h1>😂 JAJ Daily ✝️</h1>
+    <div class="joke" id="joke">Loading joke...</div>
+    <div class="verse" id="verse">Loading verse...</div>
+    <div class="meaning" id="meaning">Please wait...</div>
+    <button onclick="generateContent()">New Joke & Verse</button>
   </div>
 
   <script>
-    const jokes = [
-      "Why couldn’t Jonah trust the ocean? Because he knew there was something fishy about it!",
-      "Why did the scarecrow win an award? Because he was outstanding in his field!",
-      "Why don’t skeletons fight each other? They don’t have the guts."
-    ];
+    async function generateContent() {
+      try {
+        // Fetch a random joke
+        const jokeRes = await fetch("https://v2.jokeapi.dev/joke/Any?type=single");
+        const jokeData = await jokeRes.json();
+        document.getElementById("joke").innerText = jokeData.joke;
 
-    const verses = [
-      { text: "Philippians 4:13 – I can do all things through Christ who strengthens me.", meaning: "God gives you strength in all challenges." },
-      { text: "John 3:16 – For God so loved the world...", meaning: "A reminder of God's unconditional love." },
-      { text: "Proverbs 3:5 – Trust in the Lord with all your heart...", meaning: "Have faith even when you don’t understand." }
-    ];
+        // Fetch a random Bible verse
+        const verseRes = await fetch("https://labs.bible.org/api/?passage=random&type=json");
+        const verseData = await verseRes.json();
+        const verse = verseData[0];
+        document.getElementById("verse").innerText = verse.bookname + " " + verse.chapter + ":" + verse.verse + " – " + verse.text;
+        document.getElementById("meaning").innerText = "Pray and reflect on how this verse applies to your life.";
+      } catch (err) {
+        document.getElementById("joke").innerText = "Couldn't load joke.";
+        document.getElementById("verse").innerText = "Couldn't load verse.";
+        document.getElementById("meaning").innerText = "Check your connection.";
+      }
+    }
 
-    // Pick a random joke and verse
-    document.getElementById("joke").innerText = jokes[Math.floor(Math.random() * jokes.length)];
-    let randomVerse = verses[Math.floor(Math.random() * verses.length)];
-    document.getElementById("verse").innerText = randomVerse.text;
-    document.getElementById("meaning").innerText = randomVerse.meaning;
+    // Load content when page opens
+    generateContent();
   </script>
 </body>
 </html>
