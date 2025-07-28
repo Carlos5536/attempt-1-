@@ -54,44 +54,34 @@
 <body>
   <div class="card">
     <h1>😂 JAJ Daily ✝️</h1>
-    <div class="joke" id="joke"></div>
-    <div class="verse" id="verse"></div>
-    <div class="meaning" id="meaning"></div>
+    <div class="joke" id="joke">Loading joke...</div>
+    <div class="verse" id="verse">Loading verse...</div>
+    <div class="meaning" id="meaning">Please wait...</div>
     <button onclick="generateContent()">New Joke & Verse</button>
   </div>
 
   <script>
-    const jokes = [
-      "Why couldn’t Jonah trust the ocean? Because he knew there was something fishy about it!",
-      "Why did the scarecrow win an award? Because he was outstanding in his field!",
-      "Why don’t skeletons fight each other? They don’t have the guts.",
-      "What did one plate say to the other? Lunch is on me!",
-      "Why did the bicycle fall over? It was two-tired!",
-      "Why can’t your nose be 12 inches long? Because then it would be a foot!",
-      "What do you call fake spaghetti? An impasta!",
-      "Why did the math book look sad? It had too many problems.",
-      "What do you call cheese that isn’t yours? Nacho cheese!",
-      "Why did the golfer bring two pairs of pants? In case he got a hole in one!",
-      "Why was the computer cold? It left its Windows open!",
-      "What do you call a boomerang that doesn’t come back? A stick."
-    ];
+    async function generateContent() {
+      try {
+        // Fetch a random joke
+        const jokeRes = await fetch("https://v2.jokeapi.dev/joke/Any?type=single");
+        const jokeData = await jokeRes.json();
+        document.getElementById("joke").innerText = jokeData.joke;
 
-    const verses = [
-      { text: "Philippians 4:13 – I can do all things through Christ who strengthens me.", meaning: "God gives you strength in all challenges." },
-      { text: "John 3:16 – For God so loved the world...", meaning: "A reminder of God's unconditional love." },
-      { text: "Proverbs 3:5 – Trust in the Lord with all your heart...", meaning: "Have faith even when you don’t understand." },
-      { text: "Psalm 23:1 – The Lord is my shepherd; I shall not want.", meaning: "God provides and guides you through life." },
-      { text: "Isaiah 41:10 – Fear not, for I am with you.", meaning: "God is always by your side during struggles." }
-    ];
-
-    function generateContent() {
-      document.getElementById("joke").innerText = jokes[Math.floor(Math.random() * jokes.length)];
-      let randomVerse = verses[Math.floor(Math.random() * verses.length)];
-      document.getElementById("verse").innerText = randomVerse.text;
-      document.getElementById("meaning").innerText = randomVerse.meaning;
+        // Fetch a random Bible verse
+        const verseRes = await fetch("https://labs.bible.org/api/?passage=random&type=json");
+        const verseData = await verseRes.json();
+        const verse = verseData[0];
+        document.getElementById("verse").innerText = verse.bookname + " " + verse.chapter + ":" + verse.verse + " – " + verse.text;
+        document.getElementById("meaning").innerText = "Pray and reflect on how this verse applies to your life.";
+      } catch (err) {
+        document.getElementById("joke").innerText = "Couldn't load joke.";
+        document.getElementById("verse").innerText = "Couldn't load verse.";
+        document.getElementById("meaning").innerText = "Check your connection.";
+      }
     }
 
-    // Generate content on page load
+    // Load content when page opens
     generateContent();
   </script>
 </body>
