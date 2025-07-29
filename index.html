@@ -5,50 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>JAJ Daily</title>
   <style>
-    body {
-      font-family: 'Segoe UI', Arial, sans-serif;
-      text-align: center;
-      background: linear-gradient(135deg, #4facfe, #00f2fe);
-      padding: 20px;
-      color: #222;
-      margin: 0;
-    }
-    .card {
-      background: #fff;
-      border-radius: 16px;
-      padding: 20px;
-      max-width: 600px;
-      margin: 40px auto;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-    }
-    h1 {
-      color: #0077cc;
-      margin-bottom: 15px;
-    }
-    .joke, .verse {
-      margin: 20px 0;
-      font-size: 1.2em;
-      font-weight: bold;
-    }
-    .meaning {
-      color: #555;
-      font-size: 1em;
-      margin-top: 10px;
-    }
-    button {
-      margin-top: 20px;
-      padding: 10px 25px;
-      font-size: 1em;
-      background: #0077cc;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: background 0.3s ease;
-    }
-    button:hover {
-      background: #005fa3;
-    }
+    body { font-family: 'Segoe UI', Arial, sans-serif; text-align: center;
+      background: linear-gradient(135deg, #4facfe, #00f2fe); padding: 20px; color: #222; margin: 0; }
+    .card { background: #fff; border-radius: 16px; padding: 20px; max-width: 600px;
+      margin: 40px auto; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
+    h1 { color: #0077cc; margin-bottom: 15px; }
+    .joke, .verse, .meaning { margin: 20px 0; font-size: 1.2em; font-weight: bold; }
+    .meaning { font-size: 1em; color: #555; }
+    button { margin-top: 20px; padding: 10px 25px; font-size: 1em; background: #0077cc;
+      color: white; border: none; border-radius: 8px; cursor: pointer; transition: background 0.3s; }
+    button:hover { background: #005fa3; }
   </style>
 </head>
 <body>
@@ -60,110 +26,31 @@
     <button onclick="generateContent()">New Joke & Verse</button>
   </div>
 
+  <script src="jokes.js"></script>
   <script>
-    const jokes = [
-      "What kind of shoes do frogs wear? Open-toad sandals.",
-      "I just built an ATM that only gives out coins. It just makes cents!",
-      "Did I ever tell you about the time I went mushroom foraging? It’s a story with a morel at the end.",
-      "What happened when two slices of bread went on a date? It was loaf at first sight.",
-      "Why do crabs never volunteer? Because they're shell-fish.",
-      "I had a quiet game of tennis today. There was no racket.",
-      "What's a shark's favorite saying? 'Man overboard!'",
-      "What did one slice of bread say to the other before the race? You're toast!",
-      "I poured some water over a duck's back yesterday. I don't think he cared.",
-      "How did I know my girlfriend thought I was invading her privacy? She wrote about it in her diary.",
-      "Why did the electric car feel discriminated against? Because the rules weren't current.",
-      "I'm such a good navigator, a self-driving car once asked me for directions.",
-      "Why do melons have weddings? They cantelope.",
-      "What did the bison say to his son when he left the ranch? Bi-son.",
-      "Watch what you say around the egg whites. They can't take a yolk.",
-      "I'm so good at fixing things, my motto is, 'If it is broke, I'll still fix it.'",
-      "Where did the pumpkins have their meeting? In the gourdroom.",
-      "What's the best way to save your dad jokes? In a dadda-base.",
-      "I got a new pen that can write under water. It can write other words too.",
-      "My boss said 'dress for the job you want, not for the job you have.' So I went in as Batman.",
-      "I went to the aquarium this weekend, but I didn’t stay long. There’s something fishy about that place.",
-      "What do you call a sheep who can sing and dance? Lady Ba Ba.",
-      "What do you call a French man wearing sandals? Philipe Fallop.",
-      "Why can't dinosaurs clap their hands? Because they're extinct.",
-      "Dogs can't operate MRI machines. But catscan.",
-      "Why do melons have weddings? Because they cantelope.",
-      "Why don't skeletons fight each other? They don't have the guts.",
-      "I'm afraid for the calendar. Its days are numbered.",
-      "Why did the math book look so sad? Because it had too many problems.",
-      "What do you call cheese that isn't yours? Nacho cheese.",
-      "Why couldn't the bicycle stand up by itself? It was two tired.",
-      "I used to hate facial hair, but then it grew on me.",
-      "What's the hardest tea to swallow? Reality.",
-      "Why did the old man fall down the well? He couldn’t see that well.",
-      "I tried to make up a joke about ghosts but I couldn't. It had plenty of spirit but no body.",
-      "Two windmills were sitting on a hill. One asks the other, 'Do you have a favorite song?' The other replies, 'Well... all my life I have been a heavy metal fan.'",
-      "Today at the bank, an old lady asked me to check her balance... So I pushed her over.",
-      "I got an A on my origami assignment when I turned my paper into my teacher.",
-      "How many storm troopers does it take to change a lightbulb? None, because they are all on the dark side.",
-      "If your house is cold, just stand in the corner. It’s always 90 degrees there.",
-      "Hi, I’m Cliff. Drop over sometime.",
-      "Did you hear about the guy who went to the doctor for a headache? The doctor examined his ear and found money. The doctor kept pulling it out until he had $1,999. Then the doctor said, 'No wonder you're not feeling two grand!'",
-      "Dad, when he puts the car in reverse: 'Ah, this takes me back.'",
-      "What do you call the security guards for Samsung? Guardians of the galaxy.",
-      "I was making a joke about retirement. It did not work.",
-      "The other day I bought a thesaurus, but when I got home and opened it, all the pages were blank. I have no word to describe how angry I am.",
-      "The owner of the tuxedo store kept hovering over me when I was browsing, so I asked him to leave me alone. He said, 'Fine, suit yourself.'",
-      "Why did the egg have a day off? Because it was Fryday.",
-      "Have you ever heard about the kidnapping at school? It's okay, he woke up.",
-      "Why did the coffee taste like dirt? Because it was ground just a few minutes ago.",
-      "What is the best present? Broken drums! You can't beat them.",
-      "I made a song about tortilla once, now it's more like a wrap.",
-      "What does a nosey pepper do? It gets jalapeño business.",
-      "What word can you make shorter by adding two letters? Short.",
-      "I stayed up all night wondering where the sun went, and then it dawned on me.",
-      "Why are Christmas trees bad at knitting? They always drop their needles.",
-      "What did the grape say when it got stepped on? Nothing, just a little wine.",
-      "What do you do to have a space party? You planet.",
-      "Why couldn’t the tree get on his computer? Because he could not log on.",
-      "What’s a dog’s favorite super hero? Labra-Thor.",
-      "What do you call a rabbit with fleas? Bugs Bunny!",
-      "What do you say when a chicken is looking at salad? Chicken sees a salad.",
-      "What do you call a cow with no legs? Ground beef!",
-      "You are on a horse riding full gallop. Next to you is a giraffe, and behind you is a lion. What do you do? Get off the carousel.",
-      "I have a horse named mayo, and mayo neighs.",
-      "What is the cutest creature in the sea? A cuddlefish.",
-      "What do you get when you cross a parrot with a caterpillar? A little walkie-talkie.",
-      "Why did the chicken cross the playground? To get to the other slide.",
-      "What do you call a deer with no eyes? No eye deer.",
-      "What do you call a fish with no eyes? Fshhhh",
-      "A pony walks into a noisy bar and tries to order a beer. Bartender says 'I can’t hear you!' Pony says: 'Sorry! I’m a little horse!'",
-      "Why did the chicken cross the road? To show the possum it could be done.",
-      "Why aren’t dogs allowed in bars? Because they can’t control their licker!",
-      "Why did the baseball player get fired? He ran 3 bases then walked home.",
-      "Why don't fish play basketball? Because they're scared of the net.",
-      "What does a sprinter eat before a race? Nothing, they fast!",
-      "My dad told me a joke about boxing. I guess I missed the punch line.",
-      "Where do basketball players go when they need a uniform? New Jersey.",
-      "What's the best animal in soccer? A score-pion.",
-      "Why shouldn't you play tennis in the jungle? Too many cheetahs.",
-      "Why couldn't the baby score in basketball? He was always dribbling.",
-      "What do you call a factory that makes okay products? A satisfactory.",
-      "Why did the scarecrow win an award? Because he was outstanding in his field."
-      // ✅ And every other joke you gave continues here...
-    ];
-
+    // Fetch a truly random Bible verse using Bible‑API.com
     async function getBibleVerse() {
       try {
-        const res = await fetch("https://labs.bible.org/api/?passage=random&type=json");
+        const res = await fetch("https://bible-api.com/verses/random");
         const data = await res.json();
-        return `${data[0].bookname} ${data[0].chapter}:${data[0].verse} – ${data[0].text}`;
-      } catch (e) {
+        const v = data.verses[0];
+        return `${v.book_name} ${v.chapter}:${v.verse} – "${v.text.trim()}"`;
+      } catch {
+        return "John 3:16 – For God so loved the world that He gave His only Son...";
       }
     }
 
     async function generateContent() {
+      // Pick a random joke
       document.getElementById("joke").innerText = jokes[Math.floor(Math.random() * jokes.length)];
-      const verseText = await getBibleVerse();
-      document.getElementById("verse").innerText = verseText;
-      document.getElementById("meaning").innerText = "Reflect on this verse and how it applies to your day.";
+      
+      // Fetch and display a random verse
+      const verse = await getBibleVerse();
+      document.getElementById("verse").innerText = verse;
+      document.getElementById("meaning").innerText = "Reflect on how God’s Word speaks to your day.";
     }
 
+    // Initial load
     generateContent();
   </script>
 </body>
