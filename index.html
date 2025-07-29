@@ -1,56 +1,86 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>JAJ Daily</title>
+  <title>Laugh & Learn Bracelet</title>
   <style>
-    body { font-family: 'Segoe UI', Arial, sans-serif; text-align: center;
-      background: linear-gradient(135deg, #4facfe, #00f2fe); padding: 20px; color: #222; margin: 0; }
-    .card { background: #fff; border-radius: 16px; padding: 20px; max-width: 600px;
-      margin: 40px auto; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
-    h1 { color: #0077cc; margin-bottom: 15px; }
-    .joke, .verse, .meaning { margin: 20px 0; font-size: 1.2em; font-weight: bold; }
-    .meaning { font-size: 1em; color: #555; }
-    button { margin-top: 20px; padding: 10px 25px; font-size: 1em; background: #0077cc;
-      color: white; border: none; border-radius: 8px; cursor: pointer; transition: background 0.3s; }
-    button:hover { background: #005fa3; }
+    body {
+      font-family: 'Arial', sans-serif;
+      text-align: center;
+      background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+      padding: 20px;
+      color: #333;
+    }
+    .card {
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 20px;
+      padding: 20px;
+      max-width: 400px;
+      margin: auto;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+    h1 {
+      color: #ff6f61;
+    }
+    .joke, .verse {
+      margin: 20px 0;
+      font-size: 1.2em;
+      font-weight: bold;
+    }
+    .meaning {
+      color: #555;
+      font-size: 1em;
+    }
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 1em;
+      background: #6a82fb;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    button:hover {
+      background: #5a72eb;
+    }
   </style>
 </head>
 <body>
   <div class="card">
-    <h1>😂 JAJ Daily ✝️</h1>
-    <div class="joke" id="joke">Loading joke...</div>
-    <div class="verse" id="verse">Loading verse...</div>
-    <div class="meaning" id="meaning">Please wait...</div>
+    <h1>😂 Laugh & Learn ✝️</h1>
+    <div class="joke" id="joke"></div>
+    <div class="verse" id="verse"></div>
+    <div class="meaning" id="meaning"></div>
     <button onclick="generateContent()">New Joke & Verse</button>
   </div>
 
-  <script src="jokes.js"></script>
   <script>
-    // Fetch a truly random Bible verse using Bible‑API.com
-    async function getBibleVerse() {
-      try {
-        const res = await fetch("https://bible-api.com/verses/random");
-        const data = await res.json();
-        const v = data.verses[0];
-        return `${v.book_name} ${v.chapter}:${v.verse} – "${v.text.trim()}"`;
-      } catch {
-        return "John 3:16 – For God so loved the world that He gave His only Son...";
-      }
-    }
+    const jokes = [
+      "Why couldn’t Jonah trust the ocean? Because he knew there was something fishy about it!",
+      "Why did the scarecrow win an award? Because he was outstanding in his field!",
+      "Why don’t skeletons fight each other? They don’t have the guts.",
+      "What did one plate say to the other? Lunch is on me!"
+    ];
 
-    async function generateContent() {
-      // Pick a random joke
+    const verses = [
+      { text: "Philippians 4:13 – I can do all things through Christ who strengthens me.", meaning: "God gives you strength in all challenges." },
+      { text: "John 3:16 – For God so loved the world...", meaning: "A reminder of God's unconditional love." },
+      { text: "Proverbs 3:5 – Trust in the Lord with all your heart...", meaning: "Have faith even when you don’t understand." },
+      { text: "Psalm 23:1 – The Lord is my shepherd; I shall not want.", meaning: "God provides and guides you through life." }
+    ];
+
+    function generateContent() {
       document.getElementById("joke").innerText = jokes[Math.floor(Math.random() * jokes.length)];
-      
-      // Fetch and display a random verse
-      const verse = await getBibleVerse();
-      document.getElementById("verse").innerText = verse;
-      document.getElementById("meaning").innerText = "Reflect on how God’s Word speaks to your day.";
+      let randomVerse = verses[Math.floor(Math.random() * verses.length)];
+      document.getElementById("verse").innerText = randomVerse.text;
+      document.getElementById("meaning").innerText = randomVerse.meaning;
     }
 
-    // Initial load
+    // Generate content on page load
     generateContent();
   </script>
 </body>
